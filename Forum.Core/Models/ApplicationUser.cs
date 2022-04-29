@@ -6,6 +6,7 @@ namespace Forum.Core.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
+        [Display(Name = "UserName")]
         public string? Name { get; set; }
     }
 }
