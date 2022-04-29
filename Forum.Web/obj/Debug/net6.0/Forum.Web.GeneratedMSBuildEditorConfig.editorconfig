@@ -15,12 +15,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\Luis\Desktop\4tune\Forum\Forum.Web
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Forum/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcRm9ydW1cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Topic/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcVG9waWNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/_ViewImports.cshtml]

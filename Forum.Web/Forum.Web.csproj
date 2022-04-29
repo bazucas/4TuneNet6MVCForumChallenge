@@ -37,4 +37,17 @@
 		</Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Areas\Forum\Views\Topic\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Areas\Forum\Views\Topic\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Areas\Forum\Views\Forum\" />
+	  <Folder Include="wwwroot\images\" />
+	</ItemGroup>
+
 </Project>
