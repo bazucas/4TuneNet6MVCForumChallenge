@@ -2,25 +2,24 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Forum.Core.Models
+namespace Forum.Core.Models;
+
+public class Topic
 {
-    public class Topic
-    {
-        [Key]
-        public Guid Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
-        public string? Title { get; set; }
+    [Required]
+    public string Title { get; set; } = string.Empty;
 
-        [Required]
-        public string? Description { get; set; }
+    [Required]
+    public string Description { get; set; } = string.Empty;
 
-        [Required]
-        public DateTime? CreationDate { get; set; }
+    [Required]
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public string? ApplicationUserId { get; set; }
-        [ForeignKey("ApplicationUserId")]
-        [ValidateNever]
-        public ApplicationUser? ApplicationUser { get; set; }
-    }
+    public string? ApplicationUserId { get; set; }
+    [ForeignKey("ApplicationUserId")]
+    [ValidateNever]
+    public ApplicationUser? ApplicationUser { get; set; }
 }

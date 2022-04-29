@@ -3,6 +3,7 @@
 public interface IUnitOfWork
 {
     ITopicRepository Topic { get; }
+
     IApplicationUserRepository ApplicationUser { get; }
 
     Task SaveAsync();

@@ -1,7 +1,6 @@
-﻿namespace Forum.Shared.Helpers
-{
-    public static class StaticDetails
-    {
+﻿namespace Forum.Shared.Helpers;
 
-    }
+public static class StaticDetails
+{
+
 }

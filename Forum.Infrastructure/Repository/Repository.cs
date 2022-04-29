@@ -22,7 +22,7 @@ public class Repository<T> : IRepository<T> where T : class
         }
         if (includeProperties != null)
         {
-            foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var includeProp in SanitizeProps(includeProperties))
             {
                 query = query.Include(includeProp);
             }
@@ -39,7 +39,7 @@ public class Repository<T> : IRepository<T> where T : class
             query = query.Where(filter);
             if (includeProperties != null)
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in SanitizeProps(includeProperties))
                 {
                     query = query.Include(includeProp);
                 }
@@ -53,7 +53,7 @@ public class Repository<T> : IRepository<T> where T : class
             query = query.Where(filter);
             if (includeProperties != null)
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in SanitizeProps(includeProperties))
                 {
                     query = query.Include(includeProp);
                 }
@@ -66,8 +66,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         await _dbSet.AddAsync(entity);
     }
-    public async Task<T?> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync<TU>(object id)
     {
+        TU castId = (TU)id;
         return await _dbSet.FindAsync(id);
     }
 
@@ -85,5 +86,7 @@ public class Repository<T> : IRepository<T> where T : class
     {
         _dbSet.RemoveRange(entities);
     }
+
+    private static IEnumerable<string> SanitizeProps(string props) => props.Replace(" ", string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 }
 
