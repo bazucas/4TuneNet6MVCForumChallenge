@@ -1,8 +1,8 @@
 ﻿using Forum.Core.Models;
 
-namespace Forum.Business.Services.Interfaces;
+namespace Forum.Business.Handlers.Interfaces;
 
-public interface ITopicService : IBaseService
+public interface ITopicHandler : IBaseHandler
 {
     Task<Topic?> GetTopicByIdAsync(string topicId);
     Task AddTopicAsync(Topic topic);

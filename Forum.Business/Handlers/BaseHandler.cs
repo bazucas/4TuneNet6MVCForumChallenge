@@ -1,13 +1,13 @@
-﻿using Forum.Business.Services.Interfaces;
+﻿using Forum.Business.Handlers.Interfaces;
 using Forum.Infrastructure.Repository.Interfaces;
 
-namespace Forum.Business.Services;
+namespace Forum.Business.Handlers;
 
-public class BaseService : IBaseService
+public class BaseHandler : IBaseHandler
 {
     internal readonly IUnitOfWork UnitOfWork;
 
-    public BaseService(IUnitOfWork unitOfWork)
+    public BaseHandler(IUnitOfWork unitOfWork)
     {
         UnitOfWork = unitOfWork;
     }

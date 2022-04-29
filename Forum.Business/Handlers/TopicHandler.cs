@@ -1,12 +1,12 @@
-﻿using Forum.Business.Services.Interfaces;
+﻿using Forum.Business.Handlers.Interfaces;
 using Forum.Core.Models;
 using Forum.Infrastructure.Repository.Interfaces;
 
-namespace Forum.Business.Services;
+namespace Forum.Business.Handlers;
 
-public class TopicService : BaseService, ITopicService
+public class TopicHandler : BaseHandler, ITopicHandler
 {
-    public TopicService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public TopicHandler(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
 
     }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Forum.Business.Services.Interfaces;
+using Forum.Business.Handlers.Interfaces;
 using Forum.Core.Models;
 using Forum.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +10,13 @@ namespace Forum.Web.Areas.Forum.Controllers
     public class TopicController : Controller
     {
         private readonly ILogger<TopicController> _logger;
-        private readonly ITopicService _topicService;
+        private readonly ITopicHandler _topicHandler;
         private readonly IMapper _mapper;
 
-        public TopicController(ILogger<TopicController> logger, ITopicService topicService, IMapper mapper)
+        public TopicController(ILogger<TopicController> logger, ITopicHandler topicService, IMapper mapper)
         {
             _logger = logger;
-            _topicService = topicService;
+            _topicHandler = topicService;
             _mapper = mapper;
         }
 
@@ -26,7 +26,7 @@ namespace Forum.Web.Areas.Forum.Controllers
 
             if (topicId == string.Empty) return View();
 
-            var topic = await _topicService.GetTopicByIdAsync(topicId);
+            var topic = await _topicHandler.GetTopicByIdAsync(topicId);
 
             if (topic is null) return View();
 
@@ -55,8 +55,8 @@ namespace Forum.Web.Areas.Forum.Controllers
                 Title = topicVm.Title
             };
 
-            await _topicService.AddTopicAsync(topic);
-            await _topicService.SaveAllAsync();
+            await _topicHandler.AddTopicAsync(topic);
+            await _topicHandler.SaveAllAsync();
             TempData["success"] = "Topic created successfully";
             return RedirectToAction("Index");
         }
@@ -67,7 +67,7 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             if (topicId == string.Empty) return NotFound();
 
-            var topic = await _topicService.GetTopicByIdAsync(topicId);
+            var topic = await _topicHandler.GetTopicByIdAsync(topicId);
 
             if (topic is null)
             {
@@ -93,7 +93,7 @@ namespace Forum.Web.Areas.Forum.Controllers
                 Title = topicVm.Title
             };
 
-            //await _topicService.UpdateTopic(topicId);
+            //await _topicHandler.UpdateTopic(topicId);
             //await _unitOfWork.SaveAsync();
             return RedirectToAction("Index");
         }
@@ -104,7 +104,7 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             if (topicId == string.Empty) return View();
 
-            var topic = await _topicService.GetTopicByIdAsync(topicId);
+            var topic = await _topicHandler.GetTopicByIdAsync(topicId);
 
             if (topic is null) return View();
 
