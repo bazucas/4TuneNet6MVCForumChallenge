@@ -1,9 +1,13 @@
 using Forum.Infrastructure.Context;
 using Forum.Infrastructure.Repository;
 using Forum.Infrastructure.Repository.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>(); ;
 
 builder.Services.AddControllersWithViews();
 
@@ -46,14 +50,13 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseRouting();
-//SeedDatabase();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=4tune}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Forum}/{controller=Home}/{action=Index}/{id?}");
 app.Run();

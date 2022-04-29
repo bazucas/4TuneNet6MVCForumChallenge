@@ -1,11 +1,11 @@
-﻿using Forum.Web.Models;
+﻿using Forum.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Forum.Web.Controllers
+namespace Forum.Web.Areas.Forum.Controllers
 {
-    [Authorize]
+    [Area("Forum")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
