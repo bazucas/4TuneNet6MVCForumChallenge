@@ -2,7 +2,7 @@
 
 namespace Forum.Business.Services.Interfaces;
 
-public interface IForumService
+public interface IForumService : IBaseService
 {
     Task<IEnumerable<Topic>> GetAllTopicsAsync();
 }

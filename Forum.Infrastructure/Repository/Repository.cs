@@ -7,9 +7,10 @@ namespace Forum.Infrastructure.Repository;
 public class Repository<T> : IRepository<T> where T : class
 {
     private readonly DbSet<T> _dbSet;
-
+    private readonly DbContext _db;
     public Repository(DbContext db)
     {
+        _db = db;
         _dbSet = db.Set<T>();
     }
 
@@ -62,7 +63,7 @@ public class Repository<T> : IRepository<T> where T : class
         }
     }
 
-    public async void Add(T entity)
+    public async Task AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);
     }

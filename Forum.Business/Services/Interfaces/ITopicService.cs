@@ -2,7 +2,8 @@
 
 namespace Forum.Business.Services.Interfaces;
 
-public interface ITopicService
+public interface ITopicService : IBaseService
 {
     Task<Topic?> GetTopicByIdAsync(string topicId);
+    Task AddTopicAsync(Topic topic);
 }

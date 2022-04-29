@@ -10,10 +10,10 @@ public class Topic
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
-    public string Title { get; set; } = string.Empty;
+    public string? Title { get; set; } = string.Empty;
 
     [Required]
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; } = string.Empty;
 
     [Required]
     public DateTime CreationDate { get; set; } = DateTime.Now;

@@ -4,14 +4,12 @@ using Forum.Infrastructure.Repository.Interfaces;
 
 namespace Forum.Business.Services;
 
-public class ForumService : IForumService
+public class ForumService : BaseService, IForumService
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public ForumService(IUnitOfWork unitOfWork)
+    public ForumService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
-        _unitOfWork = unitOfWork;
+
     }
 
-    public async Task<IEnumerable<Topic>> GetAllTopicsAsync() => await _unitOfWork.Topic.GetAllAsync();
+    public async Task<IEnumerable<Topic>> GetAllTopicsAsync() => await UnitOfWork.Topic.GetAllAsync();
 }

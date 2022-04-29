@@ -27,6 +27,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Topic/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcVG9waWNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Topic/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcVG9waWNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Topic/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcVG9waWNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Luis/Desktop/4tune/Forum/Forum.Web/Areas/Forum/Views/Topic/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcVG9waWNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

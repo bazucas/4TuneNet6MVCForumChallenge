@@ -31,19 +31,90 @@ namespace Forum.Web.Areas.Forum.Controllers
             if (topic is null) return View();
 
             var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+
+            return View(topicVm);
+        }
+
+        // CREATE TOPIC
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(TopicVm topicVm)
+        {
+            if (!ModelState.IsValid) return View(topicVm);
+
+            var topic = new Topic
+            {
+                Id = topicVm.Id,
+                Description = topicVm.Description,
+                CreationDate = topicVm.CreationDate,
+                Title = topicVm.Title
+            };
+
+            await _topicService.AddTopicAsync(topic);
+            await _topicService.SaveAllAsync();
+            TempData["success"] = "Topic created successfully";
+            return RedirectToAction("Index");
+        }
+
+
+        //EDIT TOPIC
+        public async Task<IActionResult> Edit([FromQuery] string topicId)
+        {
+            if (topicId == string.Empty) return NotFound();
+
+            var topic = await _topicService.GetTopicByIdAsync(topicId);
+
+            if (topic is null)
+            {
+                return NotFound();
+            }
+
+            var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+
             return View(topicVm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit()
+        public IActionResult Edit(TopicVm topicVm)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid) return View(topicVm);
+
+            var topic = new Topic
+            {
+                Id = topicVm.Id,
+                Description = topicVm.Description,
+                CreationDate = topicVm.CreationDate,
+                Title = topicVm.Title
+            };
+
+            //await _topicService.UpdateTopic(topicId);
+            //await _unitOfWork.SaveAsync();
+            return RedirectToAction("Index");
+        }
+
+
+        // DELETE TOPIC
+        public async Task<IActionResult> Delete([FromQuery] string topicId)
+        {
+            if (topicId == string.Empty) return View();
+
+            var topic = await _topicService.GetTopicByIdAsync(topicId);
+
+            if (topic is null) return View();
+
+            var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+            return View(topicVm);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete()
+        public IActionResult DeletePost(string topicId)
         {
             throw new NotImplementedException();
         }

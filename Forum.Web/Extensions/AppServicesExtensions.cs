@@ -15,6 +15,7 @@ public static class AppServicesExtensions
         services.AddScoped<DbContext, ApplicationDbContext>();
         services.AddScoped<ITopicService, TopicService>();
         services.AddScoped<IForumService, ForumService>();
+        services.AddScoped<IBaseService, BaseService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         //builder.Services.AddScoped<IDbInitializer, DbInitializer>();
         return services;
