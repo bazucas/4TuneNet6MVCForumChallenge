@@ -8,7 +8,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<Topic, TopicVm>();
-        CreateMap<TopicVm, Topic>();
+        CreateMap<Topic, TopicVm>()
+            .ForMember(d => d.AppUserId, o => o.MapFrom(s => s.ApplicationUserId));
     }
 }

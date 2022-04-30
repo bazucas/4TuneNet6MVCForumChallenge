@@ -1,6 +1,7 @@
 ﻿@model Forum.Web.ViewModels.TopicVm
 
 <form method="post" asp-action="Edit">
+    <input asp-for="Id" hidden/>
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Edit Topic</h2>
@@ -17,7 +18,7 @@
             <input asp-for="Description" class="form-control"/>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 150px">Create</button>
+        <button type="submit" class="btn btn-primary" style="width: 150px">Edit</button>
         <a asp-controller="Forum" asp-action="Index" class="btn btn-secondary" style="width: 150px">Back to Forum</a>
     </div>
 </form>

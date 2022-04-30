@@ -31,6 +31,16 @@ public class Repository<T> : IRepository<T> where T : class
         return await query.ToListAsync();
     }
 
+    public async Task<T?> GetByIntIdAsync(int id)
+    {
+        return await _dbSet.FindAsync(id);
+    }
+
+    public async Task<T?> GetByGuidIdAsync(Guid id)
+    {
+        return await _dbSet.FindAsync(id);
+    }
+
     public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
     {
         if (tracked)
@@ -66,11 +76,6 @@ public class Repository<T> : IRepository<T> where T : class
     public async Task AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);
-    }
-    public async Task<T?> GetByIdAsync<TU>(object id)
-    {
-        TU castId = (TU)id;
-        return await _dbSet.FindAsync(id);
     }
 
     public void Update(T entity)

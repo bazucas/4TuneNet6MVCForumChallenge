@@ -10,4 +10,5 @@ public class TopicVm
     public string? Description { get; set; }
     [ValidateNever]
     public DateTime CreationDate { get; set; }
+    public string? AppUserId { get; set; }
 }
