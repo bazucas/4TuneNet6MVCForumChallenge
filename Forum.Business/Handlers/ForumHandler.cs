@@ -11,5 +11,5 @@ public class ForumHandler : BaseHandler, IForumHandler
 
     }
 
-    public async Task<IEnumerable<Topic>> GetAllTopicsAsync() => await UnitOfWork.Topic.GetAllAsync();
+    public async Task<IEnumerable<Topic>> GetAllTopicsWithUserInfoAsync() => await UnitOfWork.Topic.GetAllAsync(includeProperties: "ApplicationUser");
 }

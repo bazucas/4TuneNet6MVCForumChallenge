@@ -24,7 +24,7 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                var topicList = await _forumHandler.GetAllTopicsAsync();
+                var topicList = await _forumHandler.GetAllTopicsWithUserInfoAsync();
                 var topicVms = _mapper.Map<IEnumerable<Topic>, IEnumerable<TopicVm>>(topicList);
                 return View(topicVms);
             }

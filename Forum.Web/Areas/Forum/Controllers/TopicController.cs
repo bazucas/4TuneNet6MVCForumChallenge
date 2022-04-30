@@ -25,11 +25,6 @@ namespace Forum.Web.Areas.Forum.Controllers
 
         public async Task<IActionResult> Index([FromQuery] string topicId)
         {
-            //var topicId = Request.Query["topicId"];
-
-            // TODO: Validar User
-            // if(userContext != userTopic) return RedirectToAction("Index", "Forum");
-
             try
             {
                 if (topicId is "" or null)
@@ -37,15 +32,18 @@ namespace Forum.Web.Areas.Forum.Controllers
                     TempData["error"] = "Invalid TopicId";
                     RedirectToAction("Index", "Forum");
                 }
-                var topic = await _topicHandler.GetTopicByIdAsync(topicId);
-
+                if (!await CurrentUserIsTopicOwner(topicId))
+                {
+                    TempData["error"] = "Invalid User";
+                    return RedirectToAction("Index", "Forum");
+                }
+                var topic = await _topicHandler.GetTopicByIdAsync(topicId!);
                 if (topic is null)
                 {
                     TempData["error"] = "Topic is null";
                     RedirectToAction("Index", "Forum");
                 }
-
-                var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+                var topicVm = _mapper.Map<Topic, TopicVm>(topic!);
                 return View(topicVm);
             }
             catch (Exception)
@@ -73,18 +71,15 @@ namespace Forum.Web.Areas.Forum.Controllers
                     TempData["error"] = "Information not valid";
                     return View(topicVm);
                 }
-
-                var claimsIdentity = (ClaimsIdentity)User.Identity!;
-                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+                var userId = GetUserId();
                 var topic = new Topic
                 {
-                    Id = topicVm.Id,
+                    Id = Guid.NewGuid(),
                     Description = topicVm.Description,
-                    CreationDate = topicVm.CreationDate,
+                    CreationDate = DateTime.Now,
                     Title = topicVm.Title,
                     ApplicationUserId = userId
                 };
-
                 await _topicHandler.AddTopicAsync(topic);
                 await _topicHandler.SaveAllAsync();
                 TempData["Success"] = "Topic Created Successfully.";
@@ -126,13 +121,8 @@ namespace Forum.Web.Areas.Forum.Controllers
             return RedirectToAction("Index", "Forum");
         }
 
-
-        // DELETE TOPIC
         public async Task<IActionResult> Delete([FromQuery] string topicId)
         {
-            // TODO: Validar User
-            // if(userContext != userTopic) return RedirectToAction("Index", "Forum");
-
             try
             {
                 if (topicId is "" or null)
@@ -140,16 +130,18 @@ namespace Forum.Web.Areas.Forum.Controllers
                     TempData["error"] = "Invalid TopicId";
                     RedirectToAction("Index", "Forum");
                 }
-
-                var topic = await _topicHandler.GetTopicByIdAsync(topicId);
-
+                if (!await CurrentUserIsTopicOwner(topicId))
+                {
+                    TempData["error"] = "Invalid User";
+                    return RedirectToAction("Index", "Forum");
+                }
+                var topic = await _topicHandler.GetTopicByIdAsync(topicId!);
                 if (topic is null)
                 {
                     TempData["error"] = "Topic is null";
                     RedirectToAction("Index", "Forum");
                 }
-
-                var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+                var topicVm = _mapper.Map<Topic, TopicVm>(topic!);
                 return View(topicVm);
             }
             catch (Exception)
@@ -181,6 +173,17 @@ namespace Forum.Web.Areas.Forum.Controllers
                 // TODO: log exception, for example
             }
             return RedirectToAction("Index", "Forum");
+        }
+
+        private async Task<bool> CurrentUserIsTopicOwner(string? topicId)
+        {
+            return GetUserId() == (await _topicHandler.GetTopicByIdAsync(topicId!))?.ApplicationUserId;
+        }
+
+        private string? GetUserId()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity!;
+            return claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
     }
 }

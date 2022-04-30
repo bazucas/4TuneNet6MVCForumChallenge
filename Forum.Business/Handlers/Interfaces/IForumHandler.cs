@@ -4,5 +4,5 @@ namespace Forum.Business.Handlers.Interfaces;
 
 public interface IForumHandler : IBaseHandler
 {
-    Task<IEnumerable<Topic>> GetAllTopicsAsync();
+    Task<IEnumerable<Topic>> GetAllTopicsWithUserInfoAsync();
 }

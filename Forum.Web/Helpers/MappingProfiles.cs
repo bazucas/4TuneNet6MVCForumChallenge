@@ -9,6 +9,7 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<Topic, TopicVm>()
-            .ForMember(d => d.AppUserId, o => o.MapFrom(s => s.ApplicationUserId));
+            .ForMember(d => d.AppUserId, o => o.MapFrom(s => s.ApplicationUserId))
+            .ForMember(d => d.UserName, o => o.MapFrom(s => s.ApplicationUser!.Name));
     }
 }
