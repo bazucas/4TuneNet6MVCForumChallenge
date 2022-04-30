@@ -30,11 +30,30 @@ namespace Forum.Web.Areas.Forum.Controllers
             // TODO: Validar User
             // if(userContext != userTopic) return RedirectToAction("Index", "Forum");
 
-            if (topicId == string.Empty) return View();
-            var topic = await _topicHandler.GetTopicByIdAsync(topicId);
-            if (topic is null) return View();
-            var topicVm = _mapper.Map<Topic, TopicVm>(topic);
-            return View(topicVm);
+            try
+            {
+                if (topicId is "" or null)
+                {
+                    TempData["error"] = "Invalid TopicId";
+                    RedirectToAction("Index", "Forum");
+                }
+                var topic = await _topicHandler.GetTopicByIdAsync(topicId);
+
+                if (topic is null)
+                {
+                    TempData["error"] = "Topic is null";
+                    RedirectToAction("Index", "Forum");
+                }
+
+                var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+                return View(topicVm);
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An exception occurred";
+                // TODO: log exception, for example
+            }
+            return RedirectToAction("Index", "Forum");
         }
 
         // CREATE TOPIC
@@ -47,20 +66,34 @@ namespace Forum.Web.Areas.Forum.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TopicVm topicVm)
         {
-            if (!ModelState.IsValid) return View(topicVm);
-            var claimsIdentity = (ClaimsIdentity)User.Identity!;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            var topic = new Topic
+            try
             {
-                Id = topicVm.Id,
-                Description = topicVm.Description,
-                CreationDate = topicVm.CreationDate,
-                Title = topicVm.Title,
-                ApplicationUserId = userId
-            };
+                if (!ModelState.IsValid)
+                {
+                    TempData["error"] = "Information not valid";
+                    return View(topicVm);
+                }
 
-            await _topicHandler.AddTopicAsync(topic);
-            await _topicHandler.SaveAllAsync();
+                var claimsIdentity = (ClaimsIdentity)User.Identity!;
+                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+                var topic = new Topic
+                {
+                    Id = topicVm.Id,
+                    Description = topicVm.Description,
+                    CreationDate = topicVm.CreationDate,
+                    Title = topicVm.Title,
+                    ApplicationUserId = userId
+                };
+
+                await _topicHandler.AddTopicAsync(topic);
+                await _topicHandler.SaveAllAsync();
+                TempData["Success"] = "Topic Created Successfully.";
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An exception occurred";
+                // TODO: log exception, for example
+            }
             return RedirectToAction("Index", "Forum");
         }
 
@@ -68,17 +101,28 @@ namespace Forum.Web.Areas.Forum.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TopicVm topicVm)
         {
-            if (!ModelState.IsValid) return View(topicVm);
-
-            var topic = new Topic
+            try
             {
-                Id = topicVm.Id,
-                Title = topicVm.Title,
-                Description = topicVm.Description
-            };
-
-            await _topicHandler.UpdateTopicAsync(topic);
-            await _topicHandler.SaveAllAsync();
+                if (!ModelState.IsValid)
+                {
+                    TempData["error"] = "Information not valid";
+                    return View(topicVm);
+                }
+                var topic = new Topic
+                {
+                    Id = topicVm.Id,
+                    Title = topicVm.Title,
+                    Description = topicVm.Description
+                };
+                await _topicHandler.UpdateTopicAsync(topic);
+                await _topicHandler.SaveAllAsync();
+                TempData["Success"] = "Topic Updated Successfully.";
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An exception occurred";
+                // TODO: log exception, for example
+            }
             return RedirectToAction("Index", "Forum");
         }
 
@@ -89,21 +133,53 @@ namespace Forum.Web.Areas.Forum.Controllers
             // TODO: Validar User
             // if(userContext != userTopic) return RedirectToAction("Index", "Forum");
 
-            if (topicId == string.Empty) return View();
-            var topic = await _topicHandler.GetTopicByIdAsync(topicId);
-            if (topic is null) return View();
-            var topicVm = _mapper.Map<Topic, TopicVm>(topic);
-            return View(topicVm);
+            try
+            {
+                if (topicId is "" or null)
+                {
+                    TempData["error"] = "Invalid TopicId";
+                    RedirectToAction("Index", "Forum");
+                }
+
+                var topic = await _topicHandler.GetTopicByIdAsync(topicId);
+
+                if (topic is null)
+                {
+                    TempData["error"] = "Topic is null";
+                    RedirectToAction("Index", "Forum");
+                }
+
+                var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+                return View(topicVm);
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An exception occurred";
+                // TODO: log exception, for example
+            }
+            return RedirectToAction("Index", "Forum");
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePost(string? id)
         {
-            //TODO: Validar user
-            if (!ModelState.IsValid || id is null) return RedirectToAction("Index", "Forum");
-            await _topicHandler.DeleteTopicAsync(id);
-            await _topicHandler.SaveAllAsync();
+            try
+            {
+                if (!ModelState.IsValid || id is null)
+                {
+                    TempData["error"] = "Information not valid";
+                    return RedirectToAction("Index", "Forum");
+                }
+                await _topicHandler.DeleteTopicAsync(id);
+                await _topicHandler.SaveAllAsync();
+                TempData["Success"] = "Topic Deleted Successfully.";
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An exception occurred";
+                // TODO: log exception, for example
+            }
             return RedirectToAction("Index", "Forum");
         }
     }

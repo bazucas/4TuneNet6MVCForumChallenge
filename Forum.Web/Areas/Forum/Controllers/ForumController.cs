@@ -22,9 +22,18 @@ namespace Forum.Web.Areas.Forum.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var topicList = await _forumHandler.GetAllTopicsAsync();
-            var topicVms = _mapper.Map<IEnumerable<Topic>, IEnumerable<TopicVm>>(topicList);
-            return View(topicVms);
+            try
+            {
+                var topicList = await _forumHandler.GetAllTopicsAsync();
+                var topicVms = _mapper.Map<IEnumerable<Topic>, IEnumerable<TopicVm>>(topicList);
+                return View(topicVms);
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "An exception occurred";
+                // TODO: log exception, for example
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
