@@ -167,6 +167,9 @@
             "projectReferences": {
               "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Core\\Forum.Core.csproj": {
                 "projectPath": "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Core\\Forum.Core.csproj"
+              },
+              "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Shared\\Forum.Shared.csproj": {
+                "projectPath": "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Shared\\Forum.Shared.csproj"
               }
             }
           }

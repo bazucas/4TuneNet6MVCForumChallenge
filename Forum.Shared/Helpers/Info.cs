@@ -21,4 +21,5 @@ public static class Info
     public const string AccessOtherUserTopic = "User tried to access other user's Topic";
     public const string GenericException = "Generic exception was thrown";
     public const string Exception = "An Exception has occurred";
+    public const string MigrationsPending = "Seed could not be done, migrations pend";
 }

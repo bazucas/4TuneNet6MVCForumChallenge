@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "306e31c2-24f3-4b5c-b4f7-3e6891cb304e",
+    "UserName": "Sarah",
+    "Email": "sarah@gmail.com",
+    "Name": "Sarah Connor",
+    "PhoneNumber": "+351210000000",
+    "Password": "Pa$$w0rd"
+  },
+  {
+    "Id": "f603f8a5-910d-4100-9004-591958278258",
+    "UserName": "John",
+    "Email": "john@gmail.com",
+    "Name": "John McClane",
+    "PhoneNumber": "+351211111111",
+    "Password": "Pa$$w0rd"
+  },
+  {
+    "Id": "2dd53377-3a6f-4d5b-9230-46f1d7684328",
+    "UserName": "Jack",
+    "Email": "jack@gmail.com",
+    "Name": "Jack Sparrow",
+    "PhoneNumber": "+351212222222",
+    "Password": "Pa$$w0rd"
+  }
+]

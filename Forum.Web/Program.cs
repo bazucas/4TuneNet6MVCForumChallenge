@@ -1,3 +1,5 @@
+using Forum.Infrastructure.Context;
+using Forum.Infrastructure.DbInitializer;
 using Forum.Web.Extensions;
 using Forum.Web.Helpers;
 
@@ -32,4 +34,10 @@ app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Forum}/{controller=Home}/{action=Index}/{id?}");
+
+using var scope = app.Services.CreateScope();
+var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+dbInitializer.Initialize(context);
+
 app.Run();

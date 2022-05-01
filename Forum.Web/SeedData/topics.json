@@ -1,0 +1,72 @@
+[
+  {
+    "Id": "53c219b0-e66e-4fa7-b41f-d920c2e9b598",
+    "Title": "Bitcoin Discussion",
+    "Description": "General discussion about the Bitcoin ecosystem that doesn't fit better elsewhere. News, the Bitcoin community, innovations, the general environment, etc. Discussion of specific Bitcoin-related services usually belongs in other sections.",
+    "CreationDate": "2022-04-30T00:00:00",
+    "ApplicationUserId": "306e31c2-24f3-4b5c-b4f7-3e6891cb304e"
+  },
+  {
+    "Id": "a845ecb3-b626-4b16-90aa-6abb37d92873",
+    "Title": "Development & Technical Discussion",
+    "Description": "Technical discussion about Satoshi's Bitcoin client and the Bitcoin network in general. No third-party sites/clients, bug reports that do not require much discussion (use github), or support requests.",
+    "CreationDate": "2022-04-30T00:00:00",
+    "ApplicationUserId": "306e31c2-24f3-4b5c-b4f7-3e6891cb304e"
+  },
+  {
+    "Id": "ede1b018-8500-4df1-a4b0-3c99ccc00958",
+    "Title": "My Bitcoin Wallet",
+    "Description": "Let's help you find a bitcoin wallet. Answer the following questions to create a list of wallets that meet your needs.",
+    "CreationDate": "2022-04-30T00:00:00",
+    "ApplicationUserId": "306e31c2-24f3-4b5c-b4f7-3e6891cb304e"
+  },
+  {
+    "Id": "aab8787f-4693-4081-80e9-122da57d9a18",
+    "Title": "Mining",
+    "Description": "Generating bitcoins.",
+    "CreationDate": "2022-04-29T00:00:00",
+    "ApplicationUserId": "f603f8a5-910d-4100-9004-591958278258"
+  },
+  {
+    "Id": "6a8fb813-454d-488c-ba60-934ab06d4939",
+    "Title": "Bitcoin Technical Support",
+    "Description": "Questions regarding issues with Bitcoin Core, nodes, the Bitcoin network, transactions, and addresses.",
+    "CreationDate": "2022-04-29T00:00:00",
+    "ApplicationUserId": "f603f8a5-910d-4100-9004-591958278258"
+  },
+  {
+    "Id": "c7eea181-0d0a-403a-af7b-a8d2ee8b5c81",
+    "Title": "Project Development",
+    "Description": "Organization of Bitcoin and related projects, bounty campaigns, advertising etc.",
+    "CreationDate": "2022-04-28T00:00:00",
+    "ApplicationUserId": "f603f8a5-910d-4100-9004-591958278258"
+  },
+  {
+    "Id": "6b206626-743f-493c-92de-b05e9d2100df",
+    "Title": "Trading Discussion",
+    "Description": "Discussion about doing business with Bitcoin. Best trading practices, delivery methods etc.",
+    "CreationDate": "2022-04-28T00:00:00",
+    "ApplicationUserId": "2dd53377-3a6f-4d5b-9230-46f1d7684328"
+  },
+  {
+    "Id": "fed9f248-b5d7-4974-9f1c-ba92ebb6099f",
+    "Title": "Altcoin Discussion",
+    "Description": "Discussion of cryptocurrencies other than Bitcoin. Note that discussion of how these currencies *relate to* Bitcoin may fit in other categories.",
+    "CreationDate": "2022-04-27T00:00:00",
+    "ApplicationUserId": "2dd53377-3a6f-4d5b-9230-46f1d7684328"
+  },
+  {
+    "Id": "2eacd8c4-b502-4246-b0db-dd1d9ddf87b4",
+    "Title": "Off-topic",
+    "Description": "Other topics that might be of interest to bitcoiners.",
+    "CreationDate": "2022-04-26T00:00:00",
+    "ApplicationUserId": "2dd53377-3a6f-4d5b-9230-46f1d7684328"
+  },
+  {
+    "Id": "e700b66e-66ac-46e3-a424-e9da28be0030",
+    "Title": "Serious discussion",
+    "Description": "More serious discussion. No advertising of any kind. No junk posts.",
+    "CreationDate": "2022-04-26T00:00:00",
+    "ApplicationUserId": "2dd53377-3a6f-4d5b-9230-46f1d7684328"
+  }
+]

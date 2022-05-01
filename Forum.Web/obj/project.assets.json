@@ -4056,6 +4056,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Forum.Core": "1.0.0",
+          "Forum.Shared": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.4",
           "Microsoft.EntityFrameworkCore": "6.0.4",
           "Microsoft.EntityFrameworkCore.Relational": "6.0.4",

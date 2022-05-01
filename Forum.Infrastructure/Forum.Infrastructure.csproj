@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DbInitializer\" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.4" />
@@ -16,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Forum.Core\Forum.Core.csproj" />
+    <ProjectReference Include="..\Forum.Shared\Forum.Shared.csproj" />
   </ItemGroup>
 
 </Project>
