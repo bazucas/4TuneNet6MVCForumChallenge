@@ -23,7 +23,7 @@ public class TopicVm
     /// The title.
     /// </value>
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
     /// <summary>
     /// Gets or sets the description.
     /// </summary>
@@ -31,7 +31,7 @@ public class TopicVm
     /// The description.
     /// </value>
     [Required]
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
     /// <summary>
     /// Gets or sets the creation date.
     /// </summary>
