@@ -10,14 +10,33 @@ using System.Security.Claims;
 
 namespace Forum.Web.Areas.Forum.Controllers
 {
+    /// <summary>
+    /// TopicController inherits from <see cref="Controller"/>
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     [Area("Forum")]
     [Authorize]
     public class TopicController : Controller
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private readonly ILogger<TopicController> _logger;
+        /// <summary>
+        /// The topic handler
+        /// </summary>
         private readonly ITopicHandler _topicHandler;
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TopicController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="topicService">The topic service.</param>
+        /// <param name="mapper">The mapper.</param>
         public TopicController(ILogger<TopicController> logger, ITopicHandler topicService, IMapper mapper)
         {
             _logger = logger;
@@ -25,6 +44,14 @@ namespace Forum.Web.Areas.Forum.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Indexes the specified topic identifier.
+        /// </summary>
+        /// <param name="topicId">The topic identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="Forum.Shared.Exceptions.InvalidIdException"></exception>
+        /// <exception cref="Forum.Shared.Exceptions.InvalidUserException"></exception>
+        /// <exception cref="Forum.Shared.Exceptions.NullTopicException"></exception>
         public async Task<IActionResult> Index([FromQuery] string topicId)
         {
             try
@@ -48,7 +75,7 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (InvalidUserException ex)
             {
-                TempData[Info.Error] = Info.InvalidUser;
+                TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (NullTopicException ex)
@@ -65,11 +92,22 @@ namespace Forum.Web.Areas.Forum.Controllers
             return RedirectToAction("Index", "Forum");
         }
 
+        /// <summary>
+        /// Creates this instance.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// Creates the specified topic vm.
+        /// </summary>
+        /// <param name="topicVm">The topic vm.</param>
+        /// <returns></returns>
+        /// <exception cref="Forum.Shared.Exceptions.ModelStateNotValidException"></exception>
+        /// <exception cref="Forum.Shared.Exceptions.InvalidUserException"></exception>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TopicVm topicVm)
@@ -104,7 +142,7 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (InvalidUserException ex)
             {
-                TempData[Info.Error] = Info.InvalidUser;
+                TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (Exception ex)
@@ -116,6 +154,12 @@ namespace Forum.Web.Areas.Forum.Controllers
             return RedirectToAction("Index", "Forum");
         }
 
+        /// <summary>
+        /// Edits the specified topic vm.
+        /// </summary>
+        /// <param name="topicVm">The topic vm.</param>
+        /// <returns></returns>
+        /// <exception cref="Forum.Shared.Exceptions.ModelStateNotValidException"></exception>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TopicVm topicVm)
@@ -151,6 +195,14 @@ namespace Forum.Web.Areas.Forum.Controllers
             return RedirectToAction("Index", "Forum");
         }
 
+        /// <summary>
+        /// Deletes the specified topic identifier.
+        /// </summary>
+        /// <param name="topicId">The topic identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="Forum.Shared.Exceptions.InvalidIdException"></exception>
+        /// <exception cref="Forum.Shared.Exceptions.InvalidUserException"></exception>
+        /// <exception cref="Forum.Shared.Exceptions.NullTopicException"></exception>
         public async Task<IActionResult> Delete([FromQuery] string topicId)
         {
             try
@@ -174,7 +226,7 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (InvalidUserException ex)
             {
-                TempData[Info.Error] = Info.InvalidUser;
+                TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (NullTopicException ex)
@@ -190,6 +242,13 @@ namespace Forum.Web.Areas.Forum.Controllers
             return RedirectToAction("Index", "Forum");
         }
 
+        /// <summary>
+        /// Deletes the post.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="Forum.Shared.Exceptions.ModelStateNotValidException"></exception>
+        /// <exception cref="Forum.Shared.Exceptions.InvalidIdException"></exception>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePost(string? id)
@@ -224,11 +283,20 @@ namespace Forum.Web.Areas.Forum.Controllers
             return RedirectToAction("Index", "Forum");
         }
 
+        /// <summary>
+        /// Currents the user is topic owner.
+        /// </summary>
+        /// <param name="topicId">The topic identifier.</param>
+        /// <returns></returns>
         private async Task<bool> CurrentUserIsTopicOwner(string? topicId)
         {
             return GetUserId() == (await _topicHandler.GetTopicByIdAsync(topicId!))?.ApplicationUserId;
         }
 
+        /// <summary>
+        /// Gets the user identifier.
+        /// </summary>
+        /// <returns></returns>
         private string? GetUserId()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity!;

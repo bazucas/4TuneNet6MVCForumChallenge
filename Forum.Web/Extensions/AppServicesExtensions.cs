@@ -6,8 +6,16 @@ using Forum.Infrastructure.Repository.Interfaces;
 
 namespace Forum.Web.Extensions;
 
+/// <summary>
+/// Extension method that receives <see cref="IServiceCollection"/> and adds the dependencies.
+/// </summary>
 public static class AppServicesExtensions
 {
+    /// <summary>
+    /// Adds the application services.
+    /// </summary>
+    /// <param name="services">The services.</param>
+    /// <returns></returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();

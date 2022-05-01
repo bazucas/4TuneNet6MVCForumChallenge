@@ -8,13 +8,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Web.Areas.Forum.Controllers
 {
+    /// <summary>
+    /// ForumController inherits from <see cref="Controller"/>
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     [Area("Forum")]
     public class ForumController : Controller
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private readonly ILogger<ForumController> _logger;
+        /// <summary>
+        /// The forum handler
+        /// </summary>
         private readonly IForumHandler _forumHandler;
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ForumController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="forumService">The forum service.</param>
+        /// <param name="mapper">The mapper.</param>
         public ForumController(ILogger<ForumController> logger, IForumHandler forumService, IMapper mapper)
         {
             _logger = logger;
@@ -22,6 +41,11 @@ namespace Forum.Web.Areas.Forum.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Forum.Shared.Exceptions.EmptyTopicListException"></exception>
         public async Task<IActionResult> Index()
         {
             try

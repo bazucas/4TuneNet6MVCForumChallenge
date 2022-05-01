@@ -8,17 +8,37 @@ using System.Text.Json;
 
 namespace Forum.Infrastructure.DbInitializer
 {
+    /// <summary>
+    /// DbInitializer implements <see cref="IDbInitializer"/>
+    /// </summary>
+    /// <seealso cref="Forum.Infrastructure.DbInitializer.IDbInitializer" />
     public class DbInitializer : IDbInitializer
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private readonly ILogger<DbInitializer> _logger;
+
+        /// <summary>
+        /// The user manager
+        /// </summary>
         private readonly UserManager<IdentityUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DbInitializer"/> class.
+        /// </summary>
+        /// <param name="userManager">The user manager.</param>
+        /// <param name="logger">The logger.</param>
         public DbInitializer(UserManager<IdentityUser> userManager, ILogger<DbInitializer> logger)
         {
             _userManager = userManager;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Initializes the specified database.
+        /// </summary>
+        /// <param name="db">The database.</param>
         public async Task Initialize(ApplicationDbContext? db)
         {
             try
@@ -56,12 +76,20 @@ namespace Forum.Infrastructure.DbInitializer
             }
         }
 
+        /// <summary>
+        /// Gets the mock application users.
+        /// </summary>
+        /// <returns>A List of <see cref="IEnumerable{ApplicationUserWithPassword}"/> T = <see cref="ApplicationUserWithPassword"/></returns>
         private static async Task<IEnumerable<ApplicationUserWithPassword>> GetMockAppUsers()
         {
             var usersData = await File.ReadAllTextAsync("./SeedData/users.json");
             return JsonSerializer.Deserialize<List<ApplicationUserWithPassword>>(usersData) ?? new List<ApplicationUserWithPassword>();
         }
 
+        /// <summary>
+        /// Gets the mock topics.
+        /// </summary>
+        /// <returns>A List of <see cref="IEnumerable{Topic}"/> T = <see cref="Topic"/></returns>
         private static async Task<IEnumerable<Topic>> GetMockTopics()
         {
             var topicsData = await File.ReadAllTextAsync("./SeedData/topics.json");
