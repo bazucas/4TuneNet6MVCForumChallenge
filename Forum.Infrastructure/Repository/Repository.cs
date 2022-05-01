@@ -41,7 +41,7 @@ public class Repository<T> : IRepository<T> where T : class
         return await _dbSet.FindAsync(id);
     }
 
-    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
+    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>>? filter, string? includeProperties = null, bool tracked = true)
     {
         if (tracked)
         {

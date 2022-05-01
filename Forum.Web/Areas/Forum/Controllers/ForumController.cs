@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Forum.Business.Handlers.Interfaces;
 using Forum.Core.Models;
+using Forum.Shared.Exceptions;
+using Forum.Shared.Helpers;
 using Forum.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,14 +27,24 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 var topicList = await _forumHandler.GetAllTopicsWithUserInfoAsync();
+
+                if (!topicList.Any()) throw new EmptyTopicListException();
+
                 var topicVms = _mapper.Map<IEnumerable<Topic>, IEnumerable<TopicVm>>(topicList);
+
                 return View(topicVms);
             }
-            catch (Exception)
+            catch (EmptyTopicListException ex)
             {
-                TempData["error"] = "An exception occurred";
-                // TODO: log exception, for example
+                TempData[Info.Error] = Info.EmptyTopicList;
+                _logger.LogError(Info.NoTopicsInDb, ex);
             }
+            catch (Exception ex)
+            {
+                TempData[Info.Error] = Info.Exception;
+                _logger.LogError(Info.GenericException, ex);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }

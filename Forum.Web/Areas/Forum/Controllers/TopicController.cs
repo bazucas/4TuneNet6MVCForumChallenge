@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Forum.Business.Handlers.Interfaces;
 using Forum.Core.Models;
+using Forum.Shared.Exceptions;
+using Forum.Shared.Helpers;
 using Forum.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,34 +29,42 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                if (topicId is "" or null)
-                {
-                    TempData["error"] = "Invalid TopicId";
-                    RedirectToAction("Index", "Forum");
-                }
-                if (!await CurrentUserIsTopicOwner(topicId))
-                {
-                    TempData["error"] = "Invalid User";
-                    return RedirectToAction("Index", "Forum");
-                }
+                if (topicId is "" or null) throw new InvalidIdException();
+
+                if (!await CurrentUserIsTopicOwner(topicId)) throw new InvalidUserException(Info.AccessOtherUserTopic);
+
                 var topic = await _topicHandler.GetTopicByIdAsync(topicId!);
-                if (topic is null)
-                {
-                    TempData["error"] = "Topic is null";
-                    RedirectToAction("Index", "Forum");
-                }
-                var topicVm = _mapper.Map<Topic, TopicVm>(topic!);
+
+                if (topic is null) throw new NullTopicException();
+
+                var topicVm = _mapper.Map<Topic, TopicVm>(topic);
+
                 return View(topicVm);
             }
-            catch (Exception)
+            catch (InvalidIdException ex)
             {
-                TempData["error"] = "An exception occurred";
-                // TODO: log exception, for example
+                TempData[Info.Error] = Info.InvalidTopicId;
+                _logger.LogError(Info.TopicIdDontExist, ex);
             }
+            catch (InvalidUserException ex)
+            {
+                TempData[Info.Error] = Info.InvalidUser;
+                _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+            }
+            catch (NullTopicException ex)
+            {
+                TempData[Info.Error] = Info.NoTopic;
+                _logger.LogError(Info.EmptyTopic, ex);
+            }
+            catch (Exception ex)
+            {
+                TempData[Info.Error] = Info.Exception;
+                _logger.LogError(Info.GenericException, ex);
+            }
+
             return RedirectToAction("Index", "Forum");
         }
 
-        // CREATE TOPIC
         public IActionResult Create()
         {
             return View();
@@ -66,12 +76,12 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    TempData["error"] = "Information not valid";
-                    return View(topicVm);
-                }
+                if (!ModelState.IsValid) throw new ModelStateNotValidException();
+
                 var userId = GetUserId();
+
+                if (userId is null) throw new InvalidUserException(Info.NoIdUser);
+
                 var topic = new Topic
                 {
                     Id = Guid.NewGuid(),
@@ -80,15 +90,29 @@ namespace Forum.Web.Areas.Forum.Controllers
                     Title = topicVm.Title,
                     ApplicationUserId = userId
                 };
+
                 await _topicHandler.AddTopicAsync(topic);
                 await _topicHandler.SaveAllAsync();
-                TempData["Success"] = "Topic Created Successfully.";
+
+                TempData[Info.Success] = Info.TopicCreated;
             }
-            catch (Exception)
+            catch (ModelStateNotValidException ex)
             {
-                TempData["error"] = "An exception occurred";
-                // TODO: log exception, for example
+                TempData[Info.Error] = Info.InvalidForm;
+                _logger.LogError(Info.ModelStateNotValid, ex);
+                return View(topicVm);
             }
+            catch (InvalidUserException ex)
+            {
+                TempData[Info.Error] = Info.InvalidUser;
+                _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+            }
+            catch (Exception ex)
+            {
+                TempData[Info.Error] = Info.Exception;
+                _logger.LogError(Info.GenericException, ex);
+            }
+
             return RedirectToAction("Index", "Forum");
         }
 
@@ -98,26 +122,32 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    TempData["error"] = "Information not valid";
-                    return View(topicVm);
-                }
+                if (!ModelState.IsValid) throw new ModelStateNotValidException();
+
                 var topic = new Topic
                 {
                     Id = topicVm.Id,
                     Title = topicVm.Title,
                     Description = topicVm.Description
                 };
+
                 await _topicHandler.UpdateTopicAsync(topic);
                 await _topicHandler.SaveAllAsync();
-                TempData["Success"] = "Topic Updated Successfully.";
+
+                TempData[Info.Success] = Info.TopicEdited;
             }
-            catch (Exception)
+            catch (ModelStateNotValidException ex)
             {
-                TempData["error"] = "An exception occurred";
-                // TODO: log exception, for example
+                TempData[Info.Error] = Info.InvalidForm;
+                _logger.LogError(Info.ModelStateNotValid, ex);
+                return View(topicVm);
             }
+            catch (Exception ex)
+            {
+                TempData[Info.Error] = Info.Exception;
+                _logger.LogError(Info.GenericException, ex);
+            }
+
             return RedirectToAction("Index", "Forum");
         }
 
@@ -125,29 +155,37 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                if (topicId is "" or null)
-                {
-                    TempData["error"] = "Invalid TopicId";
-                    RedirectToAction("Index", "Forum");
-                }
-                if (!await CurrentUserIsTopicOwner(topicId))
-                {
-                    TempData["error"] = "Invalid User";
-                    return RedirectToAction("Index", "Forum");
-                }
+                if (topicId is "" or null) throw new InvalidIdException();
+
+                if (!await CurrentUserIsTopicOwner(topicId)) throw new InvalidUserException(Info.AccessOtherUserTopic);
+
                 var topic = await _topicHandler.GetTopicByIdAsync(topicId!);
-                if (topic is null)
-                {
-                    TempData["error"] = "Topic is null";
-                    RedirectToAction("Index", "Forum");
-                }
+
+                if (topic is null) throw new NullTopicException();
+
                 var topicVm = _mapper.Map<Topic, TopicVm>(topic!);
+
                 return View(topicVm);
             }
-            catch (Exception)
+            catch (InvalidIdException ex)
             {
-                TempData["error"] = "An exception occurred";
-                // TODO: log exception, for example
+                TempData[Info.Error] = Info.InvalidTopicId;
+                _logger.LogError(Info.TopicIdDontExist, ex);
+            }
+            catch (InvalidUserException ex)
+            {
+                TempData[Info.Error] = Info.InvalidUser;
+                _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+            }
+            catch (NullTopicException ex)
+            {
+                TempData[Info.Error] = Info.NoTopic;
+                _logger.LogError(Info.EmptyTopic, ex);
+            }
+            catch (Exception ex)
+            {
+                TempData[Info.Error] = Info.Exception;
+                _logger.LogError(Info.GenericException, ex);
             }
             return RedirectToAction("Index", "Forum");
         }
@@ -158,20 +196,31 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                if (!ModelState.IsValid || id is null)
-                {
-                    TempData["error"] = "Information not valid";
-                    return RedirectToAction("Index", "Forum");
-                }
+                if (!ModelState.IsValid) throw new ModelStateNotValidException();
+
+                if (id is "" or null) throw new InvalidIdException();
+
                 await _topicHandler.DeleteTopicAsync(id);
                 await _topicHandler.SaveAllAsync();
-                TempData["Success"] = "Topic Deleted Successfully.";
+
+                TempData[Info.Success] = Info.TopicDeleted;
             }
-            catch (Exception)
+            catch (ModelStateNotValidException ex)
             {
-                TempData["error"] = "An exception occurred";
-                // TODO: log exception, for example
+                TempData[Info.Error] = Info.InvalidForm;
+                _logger.LogError(Info.ModelStateNotValid, ex);
             }
+            catch (InvalidIdException ex)
+            {
+                TempData[Info.Error] = Info.InvalidTopicId;
+                _logger.LogError(Info.TopicIdDontExist, ex);
+            }
+            catch (Exception ex)
+            {
+                TempData[Info.Error] = Info.Exception;
+                _logger.LogError(Info.GenericException, ex);
+            }
+
             return RedirectToAction("Index", "Forum");
         }
 

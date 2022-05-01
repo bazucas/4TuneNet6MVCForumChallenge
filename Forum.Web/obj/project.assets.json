@@ -4067,6 +4067,16 @@
         "runtime": {
           "bin/placeholder/Forum.Infrastructure.dll": {}
         }
+      },
+      "Forum.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Forum.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Forum.Shared.dll": {}
+        }
       }
     }
   },
@@ -11827,6 +11837,11 @@
       "type": "project",
       "path": "../Forum.Infrastructure/Forum.Infrastructure.csproj",
       "msbuildProject": "../Forum.Infrastructure/Forum.Infrastructure.csproj"
+    },
+    "Forum.Shared/1.0.0": {
+      "type": "project",
+      "path": "../Forum.Shared/Forum.Shared.csproj",
+      "msbuildProject": "../Forum.Shared/Forum.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -11835,6 +11850,7 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "Forum.Business >= 1.0.0",
       "Forum.Infrastructure >= 1.0.0",
+      "Forum.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.4",
       "Microsoft.AspNetCore.Authentication.OpenIdConnect >= 6.0.4",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.4",
@@ -11887,6 +11903,9 @@
             },
             "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Infrastructure\\Forum.Infrastructure.csproj": {
               "projectPath": "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Infrastructure\\Forum.Infrastructure.csproj"
+            },
+            "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Shared\\Forum.Shared.csproj": {
+              "projectPath": "C:\\Users\\Luis\\Desktop\\4tune\\Forum\\Forum.Shared\\Forum.Shared.csproj"
             }
           }
         }
