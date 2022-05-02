@@ -1,5 +1,9 @@
 ﻿# 4Tune Engineering Fullstack Challenge
 
+## Demo
+
+[Click hero do demo de app](https://forum4tune.azurewebsites.net/)
+
 ## Challenge details
 
 Design an ASP.NET MVC Razor Application to be deployed on IIS using entity
@@ -16,7 +20,7 @@ without these dependencies, it won't work.
 ## Getting this repo
 
 Use PowerShell or bash terminal to clone this repo to your local machine.  
-Pick a folder and run this command on the terminal:  
+Pick a folder and run this command on the terminal:
 
 ```bash
 git clone https://github.com/bazucas/4TuneNet6MVCForumChallenge.git
@@ -41,7 +45,7 @@ dotnet build
 
 Everything should run smoothly.
 
-After restoring the dependencies and building the solution, go to the terminal and navigate to the root of the Forum.Web project and run:  
+After restoring the dependencies and building the solution, go to the terminal and navigate to the root of the Forum.Web project and run:
 
 For development mode
 
@@ -54,7 +58,8 @@ For production mode
 ```bash
 dotnet run --launch-profile Prod
 ```
-You should see in the terminal the migrations being executed, creating a new database, and persisting the mock data from the seed json files. 
+
+You should see in the terminal the migrations being executed, creating a new database, and persisting the mock data from the seed json files.
 
 ## Usage
 
@@ -65,9 +70,9 @@ You can only manage the topics you created, so you need to be registered and log
 
 You can use the three mock users:
 
-* _jack@gmail.com_
-* _sarah@gmail.com_
-* _john@gmail.com_
+- _jack@gmail.com_
+- _sarah@gmail.com_
+- _john@gmail.com_
 
 Password = Pa$$w0rd
 
