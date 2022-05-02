@@ -2,7 +2,7 @@
 
 ## Demo
 
-[Click hero do demo de app](https://forum4tune.azurewebsites.net/)
+[Click here to demo the app](https://forum4tune.azurewebsites.net/)
 
 ## Challenge details
 
