@@ -164,10 +164,10 @@ namespace Forum.Tests.Controllers
         }
 
         /// <summary>
-        /// Tests the index get empty topic list throws a generic exception.
+        /// Tests the index get topic by identifier asynchronous throws general exception and it will bubble up to controller.
         /// </summary>
         [Test]
-        public void Test_Index_Get_EmptyTopicListThrowsAGenericException()
+        public void Test_Index_Get_GetTopicByIdAsyncThrowsGeneralExceptionAndItWillBubbleUpToController()
         {
             // Arrange
             _topicHandler!.Setup(repo => repo.GetTopicByIdAsync(It.IsAny<string>())).Throws<Exception>();

@@ -69,7 +69,6 @@ namespace Forum.Tests.Controllers
                     ApplicationUser = new ApplicationUser()
                 }
             };
-
             _forumHandler!.Setup(repo => repo.GetAllTopicsWithUserInfoAsync()).ReturnsAsync(topicsList);
             var controller = new ForumController(_logger!.Object, _forumHandler.Object, _mapper!);
             var mappedTopics = _mapper!.Map<List<Topic>, List<TopicVm>>(topicsList);

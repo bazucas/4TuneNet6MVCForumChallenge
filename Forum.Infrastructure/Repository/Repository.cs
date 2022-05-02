@@ -39,20 +39,14 @@ public class Repository<T> : IRepository<T> where T : class
     /// <returns>
     /// Returns a Generic list of <see cref="T:System.Collections.Generic.IEnumerable`1" />
     /// </returns>
-    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null,
+        string? includeProperties = null)
     {
         IQueryable<T> query = _dbSet;
-        if (filter != null)
-        {
-            query = query.Where(filter);
-        }
-        if (includeProperties != null)
-        {
-            foreach (var includeProp in SanitizeProps(includeProperties))
-            {
-                query = query.Include(includeProp);
-            }
-        }
+        if (filter != null) query = query.Where(filter);
+        if (includeProperties is null) return await query.ToListAsync();
+        query = SanitizeProps(includeProperties)
+            .Aggregate(query, (current, includeProp) => current.Include(includeProp));
         return await query.ToListAsync();
     }
 
@@ -89,25 +83,15 @@ public class Repository<T> : IRepository<T> where T : class
     /// <returns>
     /// Returns a Generic <see cref="{T}" /> type
     /// </returns>
-    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>>? filter, string? includeProperties = null, bool tracked = true)
+    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>>? filter, string? includeProperties = null,
+        bool tracked = true)
     {
-        if (tracked)
-        {
-            IQueryable<T> query = _dbSet;
-            if (filter is not null) query = query.Where(filter);
-            if (includeProperties == null) return await query.FirstOrDefaultAsync();
-            query = SanitizeProps(includeProperties).Aggregate(query, (current, includeProp) => current.Include(includeProp));
-            return await query.FirstOrDefaultAsync();
-        }
-        else
-        {
-            var query = _dbSet.AsNoTracking();
-
-            if (filter is not null) query = query.Where(filter);
-            if (includeProperties == null) return await query.FirstOrDefaultAsync();
-            query = SanitizeProps(includeProperties).Aggregate(query, (current, includeProp) => current.Include(includeProp));
-            return await query.FirstOrDefaultAsync();
-        }
+        IQueryable<T> query = _dbSet;
+        if (filter is not null) query = query.Where(filter);
+        if (includeProperties == null) return await query.FirstOrDefaultAsync();
+        query = SanitizeProps(includeProperties)
+            .Aggregate(query, (current, includeProp) => current.Include(includeProp));
+        return await query.FirstOrDefaultAsync();
     }
 
     /// <summary>
@@ -151,6 +135,9 @@ public class Repository<T> : IRepository<T> where T : class
     /// </summary>
     /// <param name="props">The props.</param>
     /// <returns></returns>
-    private static IEnumerable<string> SanitizeProps(string props) => props.Replace(" ", string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+    private static IEnumerable<string> SanitizeProps(string props)
+    {
+        return props.Replace(" ", string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+    }
 }
 

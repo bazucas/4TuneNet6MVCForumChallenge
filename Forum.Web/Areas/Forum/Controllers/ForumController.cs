@@ -51,11 +51,8 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 var topicList = (await _forumHandler.GetAllTopicsWithUserInfoAsync()).ToList();
-
                 if (!topicList.Any()) throw new EmptyTopicListException();
-
                 var topicVms = _mapper.Map<IEnumerable<Topic>, IEnumerable<TopicVm>>(topicList);
-
                 return View(topicVms);
             }
             catch (EmptyTopicListException ex)

@@ -36,7 +36,7 @@ namespace Forum.Web.Areas.Forum.Controllers
         }
 
         /// <summary>
-        /// Privacies this instance.
+        /// Privacy page.
         /// </summary>
         /// <returns></returns>
         public IActionResult Privacy()

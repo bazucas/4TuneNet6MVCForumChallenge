@@ -6,14 +6,24 @@ using System.Security.Claims;
 
 namespace Forum.Tests.Controllers.BaseController;
 
+/// <summary>
+///  Abstract class to serve as a base for all controller tests
+/// </summary>
 public abstract class BaseControllerTests
 {
+    /// <summary>
+    /// Tears down.
+    /// </summary>
     [TearDown]
     protected void TearDown()
     {
         Mock.VerifyAll();
     }
 
+    /// <summary>
+    /// Setups the HTTP context.
+    /// </summary>
+    /// <returns></returns>
     protected HttpContext SetupHttpContext()
     {
         var context = new DefaultHttpContext();

@@ -57,15 +57,10 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 if (topicId is "" or null) throw new InvalidIdException();
-
                 if (!await CurrentUserIsTopicOwner(topicId)) throw new InvalidUserException(Info.AccessOtherUserTopic);
-
                 var topic = await _topicHandler.GetTopicByIdAsync(topicId!);
-
                 if (topic is null) throw new NullTopicException();
-
                 var topicVm = _mapper.Map<Topic, TopicVm>(topic);
-
                 return View(topicVm);
             }
             catch (InvalidIdException ex)
@@ -113,11 +108,8 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 if (!ModelState.IsValid) throw new ModelStateNotValidException();
-
                 var userId = GetUserId();
-
                 if (userId is null) throw new InvalidUserException(Info.NoIdUser);
-
                 var topic = new Topic
                 {
                     Id = Guid.NewGuid(),
@@ -126,7 +118,6 @@ namespace Forum.Web.Areas.Forum.Controllers
                     Title = topicVm.Title,
                     ApplicationUserId = userId
                 };
-
                 await _topicHandler.AddTopicAsync(topic);
                 await _topicHandler.SaveAllAsync();
 
@@ -164,17 +155,14 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 if (!ModelState.IsValid) throw new ModelStateNotValidException();
-
                 var topic = new Topic
                 {
                     Id = topicVm.Id,
                     Title = topicVm.Title,
                     Description = topicVm.Description
                 };
-
                 await _topicHandler.UpdateTopicAsync(topic);
                 await _topicHandler.SaveAllAsync();
-
                 TempData[Info.Success] = Info.TopicEdited;
             }
             catch (ModelStateNotValidException ex)
@@ -204,15 +192,15 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 if (topicId is "" or null) throw new InvalidIdException();
-
-                if (!await CurrentUserIsTopicOwner(topicId)) throw new InvalidUserException(Info.AccessOtherUserTopic);
-
+                //if (!await CurrentUserIsTopicOwner(topicId)) throw new InvalidUserException(Info.AccessOtherUserTopic);
+                if (!await CurrentUserIsTopicOwner(topicId))
+                {
+                    TempData[Info.Error] = Info.InvalidAction;
+                    return RedirectToAction("Index", "Forum");
+                }
                 var topic = await _topicHandler.GetTopicByIdAsync(topicId!);
-
                 if (topic is null) throw new NullTopicException();
-
                 var topicVm = _mapper.Map<Topic, TopicVm>(topic!);
-
                 return View(topicVm);
             }
             catch (InvalidIdException ex)
@@ -220,11 +208,11 @@ namespace Forum.Web.Areas.Forum.Controllers
                 _logger.LogError(Info.TopicIdDontExist, ex);
                 throw;
             }
-            catch (InvalidUserException ex)
-            {
-                _logger.LogError(Info.UnauthorizedTopicAccess, ex);
-                throw;
-            }
+            //catch (InvalidUserException ex)
+            //{
+            //    _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+            //    throw;
+            //}
             catch (NullTopicException ex)
             {
                 _logger.LogError(Info.EmptyTopic, ex);
@@ -251,12 +239,9 @@ namespace Forum.Web.Areas.Forum.Controllers
             try
             {
                 if (!ModelState.IsValid) throw new ModelStateNotValidException();
-
                 if (id is "" or null) throw new InvalidIdException();
-
                 await _topicHandler.DeleteTopicAsync(id);
                 await _topicHandler.SaveAllAsync();
-
                 TempData[Info.Success] = Info.TopicDeleted;
             }
             catch (ModelStateNotValidException ex)
