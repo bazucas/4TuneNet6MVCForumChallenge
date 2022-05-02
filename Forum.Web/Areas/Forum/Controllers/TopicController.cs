@@ -70,22 +70,18 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (InvalidIdException ex)
             {
-                //TempData[Info.Error] = Info.InvalidTopicId;
                 _logger.LogError(Info.TopicIdDontExist, ex);
             }
             catch (InvalidUserException ex)
             {
-                //TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (NullTopicException ex)
             {
-                //TempData[Info.Error] = Info.NoTopic;
                 _logger.LogError(Info.EmptyTopic, ex);
             }
             catch (Exception ex)
             {
-                //TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
 
@@ -136,18 +132,15 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (ModelStateNotValidException ex)
             {
-                //TempData[Info.Error] = Info.InvalidForm;
                 _logger.LogError(Info.ModelStateNotValid, ex);
                 return View(topicVm);
             }
             catch (InvalidUserException ex)
             {
-                //TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (Exception ex)
             {
-                //TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
 
