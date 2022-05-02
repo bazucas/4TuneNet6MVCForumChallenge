@@ -54,7 +54,7 @@ For production mode
 ```bash
 dotnet run --launch-profile Prod
 ```
-You should see in the terminal the migrations being executed, creating a new database, and persisting the mock data in the seed json files. 
+You should see in the terminal the migrations being executed, creating a new database, and persisting the mock data from the seed json files. 
 
 ## Usage
 
@@ -70,6 +70,11 @@ You can use the three mock users:
 * _john@gmail.com_
 
 Password = Pa$$w0rd
+
+## Warning
+
+Not all unit tests and exception handling was done, due to the fact that is was not required, and may consume some time.
+A few were implemented to show how it works and can be done.
 
 ## License
 
