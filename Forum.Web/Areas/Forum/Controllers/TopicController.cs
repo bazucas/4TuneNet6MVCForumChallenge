@@ -35,12 +35,12 @@ namespace Forum.Web.Areas.Forum.Controllers
         /// Initializes a new instance of the <see cref="TopicController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <param name="topicService">The topic service.</param>
+        /// <param name="topicHandler">The topic service.</param>
         /// <param name="mapper">The mapper.</param>
-        public TopicController(ILogger<TopicController> logger, ITopicHandler topicService, IMapper mapper)
+        public TopicController(ILogger<TopicController> logger, ITopicHandler topicHandler, IMapper mapper)
         {
             _logger = logger;
-            _topicHandler = topicService;
+            _topicHandler = topicHandler;
             _mapper = mapper;
         }
 
@@ -70,22 +70,22 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (InvalidIdException ex)
             {
-                TempData[Info.Error] = Info.InvalidTopicId;
+                //TempData[Info.Error] = Info.InvalidTopicId;
                 _logger.LogError(Info.TopicIdDontExist, ex);
             }
             catch (InvalidUserException ex)
             {
-                TempData[Info.Error] = Info.InvalidAction;
+                //TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (NullTopicException ex)
             {
-                TempData[Info.Error] = Info.NoTopic;
+                //TempData[Info.Error] = Info.NoTopic;
                 _logger.LogError(Info.EmptyTopic, ex);
             }
             catch (Exception ex)
             {
-                TempData[Info.Error] = Info.Exception;
+                //TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
 
@@ -136,18 +136,18 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (ModelStateNotValidException ex)
             {
-                TempData[Info.Error] = Info.InvalidForm;
+                //TempData[Info.Error] = Info.InvalidForm;
                 _logger.LogError(Info.ModelStateNotValid, ex);
                 return View(topicVm);
             }
             catch (InvalidUserException ex)
             {
-                TempData[Info.Error] = Info.InvalidAction;
+                //TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (Exception ex)
             {
-                TempData[Info.Error] = Info.Exception;
+                //TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
 
@@ -182,13 +182,11 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (ModelStateNotValidException ex)
             {
-                TempData[Info.Error] = Info.InvalidForm;
                 _logger.LogError(Info.ModelStateNotValid, ex);
                 return View(topicVm);
             }
             catch (Exception ex)
             {
-                TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
 
@@ -221,22 +219,18 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (InvalidIdException ex)
             {
-                TempData[Info.Error] = Info.InvalidTopicId;
                 _logger.LogError(Info.TopicIdDontExist, ex);
             }
             catch (InvalidUserException ex)
             {
-                TempData[Info.Error] = Info.InvalidAction;
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
             }
             catch (NullTopicException ex)
             {
-                TempData[Info.Error] = Info.NoTopic;
                 _logger.LogError(Info.EmptyTopic, ex);
             }
             catch (Exception ex)
             {
-                TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
             return RedirectToAction("Index", "Forum");
@@ -266,17 +260,14 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (ModelStateNotValidException ex)
             {
-                TempData[Info.Error] = Info.InvalidForm;
                 _logger.LogError(Info.ModelStateNotValid, ex);
             }
             catch (InvalidIdException ex)
             {
-                TempData[Info.Error] = Info.InvalidTopicId;
                 _logger.LogError(Info.TopicIdDontExist, ex);
             }
             catch (Exception ex)
             {
-                TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
             }
 

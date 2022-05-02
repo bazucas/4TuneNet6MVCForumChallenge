@@ -32,12 +32,12 @@ namespace Forum.Web.Areas.Forum.Controllers
         /// Initializes a new instance of the <see cref="ForumController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <param name="forumService">The forum service.</param>
+        /// <param name="forumHandler">The forum service.</param>
         /// <param name="mapper">The mapper.</param>
-        public ForumController(ILogger<ForumController> logger, IForumHandler forumService, IMapper mapper)
+        public ForumController(ILogger<ForumController> logger, IForumHandler forumHandler, IMapper mapper)
         {
             _logger = logger;
-            _forumHandler = forumService;
+            _forumHandler = forumHandler;
             _mapper = mapper;
         }
 
@@ -50,7 +50,7 @@ namespace Forum.Web.Areas.Forum.Controllers
         {
             try
             {
-                var topicList = await _forumHandler.GetAllTopicsWithUserInfoAsync();
+                var topicList = (await _forumHandler.GetAllTopicsWithUserInfoAsync()).ToList();
 
                 if (!topicList.Any()) throw new EmptyTopicListException();
 
@@ -60,16 +60,14 @@ namespace Forum.Web.Areas.Forum.Controllers
             }
             catch (EmptyTopicListException ex)
             {
-                TempData[Info.Error] = Info.EmptyTopicList;
                 _logger.LogError(Info.NoTopicsInDb, ex);
+                throw;
             }
             catch (Exception ex)
             {
-                TempData[Info.Error] = Info.Exception;
                 _logger.LogError(Info.GenericException, ex);
+                throw;
             }
-
-            return RedirectToAction("Index", "Home");
         }
     }
 }
