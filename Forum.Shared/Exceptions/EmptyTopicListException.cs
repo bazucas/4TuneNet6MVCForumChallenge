@@ -1,10 +1,10 @@
 ﻿namespace Forum.Shared.Exceptions
 {
     /// <summary>
-    /// EmptyTopicListException custom exception, inherits from <see cref="Exception"/>
+    /// EmptyTopicListException custom exception, inherits from <see cref="BaseException"/>
     /// </summary>
-    /// <seealso cref="System.Exception" />
-    public class EmptyTopicListException : Exception
+    /// <seealso cref="BaseException" />
+    public class EmptyTopicListException : BaseException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmptyTopicListException"/> class.

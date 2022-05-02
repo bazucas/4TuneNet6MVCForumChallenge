@@ -1,10 +1,10 @@
 ﻿namespace Forum.Shared.Exceptions
 {
     /// <summary>
-    /// InvalidUserException custom exception, inherits from <see cref="Exception"/>
+    /// InvalidUserException custom exception, inherits from <see cref="BaseException"/>
     /// </summary>
-    /// <seealso cref="System.Exception" />
-    public class InvalidUserException : Exception
+    /// <seealso cref="BaseException" />
+    public class InvalidUserException : BaseException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidUserException"/> class.

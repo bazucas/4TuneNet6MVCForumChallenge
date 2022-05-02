@@ -1,10 +1,10 @@
 ﻿namespace Forum.Shared.Exceptions
 {
     /// <summary>
-    /// ModelStateNotValidException custom exception, inherits from <see cref="Exception"/>
+    /// ModelStateNotValidException custom exception, inherits from <see cref="BaseException"/>
     /// </summary>
-    /// <seealso cref="System.Exception" />
-    public class ModelStateNotValidException : Exception
+    /// <seealso cref="BaseException" />
+    public class ModelStateNotValidException : BaseException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelStateNotValidException"/> class.

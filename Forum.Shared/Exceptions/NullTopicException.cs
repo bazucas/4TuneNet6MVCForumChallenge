@@ -1,9 +1,9 @@
 ﻿namespace Forum.Shared.Exceptions
 {
     /// <summary>
-    /// NullTopicException custom exception, inherits from <see cref="Exception"/>
+    /// NullTopicException custom exception, inherits from <see cref="BaseException"/>
     /// </summary>
-    /// <seealso cref="System.Exception" />
+    /// <seealso cref="BaseException" />
     public class NullTopicException : Exception
     {
         /// <summary>
