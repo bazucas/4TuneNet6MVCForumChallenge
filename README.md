@@ -73,8 +73,9 @@ Password = Pa$$w0rd
 
 ## Warning
 
-Not all unit tests and exception handling was done, due to the fact that is was not required, and may consume some time.
-A few were implemented to show how it works and can be done.
+Not all unit tests and exception handling are done because it was not required and may consume some time.
+A few unit tests and exception handling are implemented to show how it works and can be done.
+The way the app initialization is rigged, every time you start the application, it will check if the database exists and if all the topics and users exist. If none or just one is missing, it will persist in the schema and all the mock data.
 
 ## License
 
