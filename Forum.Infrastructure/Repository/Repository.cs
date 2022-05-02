@@ -94,8 +94,7 @@ public class Repository<T> : IRepository<T> where T : class
         if (tracked)
         {
             IQueryable<T> query = _dbSet;
-
-            query = query.Where(filter);
+            if (filter is not null) query = query.Where(filter);
             if (includeProperties == null) return await query.FirstOrDefaultAsync();
             query = SanitizeProps(includeProperties).Aggregate(query, (current, includeProp) => current.Include(includeProp));
             return await query.FirstOrDefaultAsync();
@@ -104,7 +103,7 @@ public class Repository<T> : IRepository<T> where T : class
         {
             var query = _dbSet.AsNoTracking();
 
-            query = query.Where(filter);
+            if (filter is not null) query = query.Where(filter);
             if (includeProperties == null) return await query.FirstOrDefaultAsync();
             query = SanitizeProps(includeProperties).Aggregate(query, (current, includeProp) => current.Include(includeProp));
             return await query.FirstOrDefaultAsync();
