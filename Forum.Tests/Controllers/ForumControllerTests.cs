@@ -72,7 +72,7 @@ namespace Forum.Tests.Controllers
 
             _forumHandler!.Setup(repo => repo.GetAllTopicsWithUserInfoAsync()).ReturnsAsync(topicsList);
             var controller = new ForumController(_logger!.Object, _forumHandler.Object, _mapper!);
-            var mappedTopics = _mapper.Map<List<Topic>, List<TopicVm>>(topicsList);
+            var mappedTopics = _mapper!.Map<List<Topic>, List<TopicVm>>(topicsList);
 
             // Act
             var result = await controller.Index();
@@ -119,5 +119,7 @@ namespace Forum.Tests.Controllers
             // Assert
             act.Should().Throw<Exception>();
         }
+
+        // TODO: Continue with the rest of the unit tests
     }
 }

@@ -71,21 +71,23 @@ namespace Forum.Web.Areas.Forum.Controllers
             catch (InvalidIdException ex)
             {
                 _logger.LogError(Info.TopicIdDontExist, ex);
+                throw;
             }
             catch (InvalidUserException ex)
             {
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+                throw;
             }
             catch (NullTopicException ex)
             {
                 _logger.LogError(Info.EmptyTopic, ex);
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(Info.GenericException, ex);
+                throw;
             }
-
-            return RedirectToAction("Index", "Forum");
         }
 
         /// <summary>
@@ -138,10 +140,12 @@ namespace Forum.Web.Areas.Forum.Controllers
             catch (InvalidUserException ex)
             {
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(Info.GenericException, ex);
+                throw;
             }
 
             return RedirectToAction("Index", "Forum");
@@ -181,6 +185,7 @@ namespace Forum.Web.Areas.Forum.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(Info.GenericException, ex);
+                throw;
             }
 
             return RedirectToAction("Index", "Forum");
@@ -213,20 +218,23 @@ namespace Forum.Web.Areas.Forum.Controllers
             catch (InvalidIdException ex)
             {
                 _logger.LogError(Info.TopicIdDontExist, ex);
+                throw;
             }
             catch (InvalidUserException ex)
             {
                 _logger.LogError(Info.UnauthorizedTopicAccess, ex);
+                throw;
             }
             catch (NullTopicException ex)
             {
                 _logger.LogError(Info.EmptyTopic, ex);
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(Info.GenericException, ex);
+                throw;
             }
-            return RedirectToAction("Index", "Forum");
         }
 
         /// <summary>
@@ -254,14 +262,17 @@ namespace Forum.Web.Areas.Forum.Controllers
             catch (ModelStateNotValidException ex)
             {
                 _logger.LogError(Info.ModelStateNotValid, ex);
+                throw;
             }
             catch (InvalidIdException ex)
             {
                 _logger.LogError(Info.TopicIdDontExist, ex);
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(Info.GenericException, ex);
+                throw;
             }
 
             return RedirectToAction("Index", "Forum");
