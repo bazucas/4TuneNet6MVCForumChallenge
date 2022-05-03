@@ -66,7 +66,7 @@ You should see in the terminal the migrations being executed, creating a new dat
 Open the browser and go to [https://localhost:44301/](https://localhost:44301/). You will see the home screen with a logo and on top, if you are in Dev env, the description of the execution environment saying Development mode.
 
 The execution of the application is quite simple. You can go to the Main/Home screen, Forum, Register and Login.
-You can only manage the topics you created, so you need to be registered and logged in. You can't change or delete other users' topics.
+You can only manage the topics you created, so you need to be registered and logged in. You can't change or delete other user's topics.
 
 You can use the three mock users:
 
